@@ -94,7 +94,7 @@ public class TariffHandler {
     public Mono<ServerResponse> updatePrice(ServerRequest request) {
 
         Integer tariffId = Integer.valueOf( request.pathVariable("id") );
-        Double price= Double.parseDouble(  request.pathVariable("price") );
+        Integer price= Integer.valueOf(  request.pathVariable("price") );
 
         Mono<Tariff> tariff= repo.findById(tariffId);
 

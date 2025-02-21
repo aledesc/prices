@@ -13,16 +13,6 @@ public class TariffMapper {
         wClient= WebClient.create();
     }
 
-//    private static Mono<String> getFormatted(Double price, String currencyCode) {
-//
-//        String _url= "http://localhost:8080/v1/currency/" + currencyCode+ "/" + price.toString();
-//
-//        return wClient.get()
-//                .uri(_url)
-//                .retrieve()
-//                .bodyToMono(String.class).map(m -> );
-//    }
-
     public static TariffDTO map(Tariff t){
 
         TariffDTO dto= new TariffDTO();

@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 
-
 @Table(name = "t_rates")
 public class Tariff {
 
@@ -32,7 +31,7 @@ public class Tariff {
     @Column("END_DATE")
     private LocalDate endDate;
 
-    private Double price;
+    private Integer price;
 
     @Column("CURRENCY_CODE")
     private String currency;
