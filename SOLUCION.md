@@ -1,5 +1,8 @@
 # spring-boot-exercice-1
 
+**OpenAPI / Swagger**
+La especificacion de la API está en: http://localhost:8080/swagger-ui/swagger-ui/index.html
+
 **Resource Owner password credentials grant flow**
 Se habilita una autenticación simple, tipo _Resource Owner password credentials grant flow_, por lo que para correr las peticiones hay que proporcionar las credenciales del 
 Resource OWner, que es el servicio, al iniciar el boot - **./gradlew bootRun**, en los logs iniciales que se muestran 

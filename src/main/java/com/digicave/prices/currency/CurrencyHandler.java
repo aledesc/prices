@@ -1,6 +1,6 @@
 package com.digicave.prices.currency;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
@@ -9,11 +9,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.security.Principal;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class CurrencyHandler {
@@ -35,7 +37,7 @@ public class CurrencyHandler {
         return Arrays.stream(keys).toList().contains( currencyCode);
     }
 
-    private String format(String currencyCode, Double value)
+    private String format(String currencyCode, Integer value)
     {
         if ( exist(currencyCode) ) {
             if (value == null || value < 0)
@@ -50,7 +52,8 @@ public class CurrencyHandler {
 
 
     // @formatter:off
-    @ApiOperation(value="Get currencies list")
+
+    @Operation(summary = "List all currencies registered.")
     @ApiResponses(value={
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response")
@@ -64,7 +67,7 @@ public class CurrencyHandler {
                     .body( BodyInserters.fromValue(currencies.values().stream().toList()) ));
     }
 
-    @ApiOperation(value="Get currency details")
+    @Operation(summary = "Given a currency code, return the currency details.")
     @ApiResponses(value={
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response"),
@@ -79,7 +82,7 @@ public class CurrencyHandler {
             .body( currency.isEmpty() ? BodyInserters.fromValue(CURRENCY_NO_FOUND) : BodyInserters.fromValue(currency) );
     }
 
-    @ApiOperation(value="Get price formatted according to currency")
+    @Operation(summary = "Given a currency code and a value, return the corresponding formatted string.")
     @ApiResponses(value={
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response"),
@@ -90,7 +93,7 @@ public class CurrencyHandler {
                 .map(Principal::getName)
                 .flatMap((username) -> {
 
-                        Optional<String> str= Optional.ofNullable( format( serverRequest.pathVariable("currencyCode"), Double.valueOf(serverRequest.pathVariable("value")) ));
+                        Optional<String> str= Optional.ofNullable( format( serverRequest.pathVariable("currencyCode"), Integer.parseInt(serverRequest.pathVariable("value")) ));
 
                         return ServerResponse.status( str.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK)
                             .contentType(MediaType.APPLICATION_JSON)
