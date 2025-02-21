@@ -1,5 +1,11 @@
 # spring-boot-exercice-1
 
+Pasos para correr:
+
+  - ./gradlew build
+  - ./gradlew bootRun
+
+
 **OpenAPI / Swagger**
 La especificacion de la API está en: http://localhost:8080/swagger-ui/swagger-ui/index.html
 
