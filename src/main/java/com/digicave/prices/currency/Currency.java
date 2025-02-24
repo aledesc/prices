@@ -15,6 +15,8 @@ public class Currency {
     public String getFormatted(Integer value)
     {
         String _decimal= "%." + decimals +"f" + " " + symbol;
-        return String.format(_decimal, value/10*decimals);
+        double quotient= Math.pow(10,decimals);
+
+        return String.format(_decimal, (double)value/quotient);
     }
 }

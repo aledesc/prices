@@ -29,68 +29,68 @@ public class TariffRoutingConfiguration {
 							, produces = {
 							MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.GET, beanClass = TariffHandler.class, beanMethod = "getAll",
 							operation = @Operation(operationId = "getAll"
-									, responses = {
-									@ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = Tariff.class))),
-									@ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response.")}
-									)),
+								, responses = {
+								@ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = Tariff.class))),
+								@ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response.")}
+								)),
 					@RouterOperation(path = "/v1/tariff/{id}"
 							, produces = {
 							MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.GET, beanClass = TariffHandler.class, beanMethod = "get",
 							operation = @Operation(operationId = "get"
-									, responses = {
-									@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Tariff.class))),
-									@ApiResponse(responseCode = "404", description = "Tariff no found!"),
-									@ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response.")}
-									,parameters = {
-											@Parameter(in = ParameterIn.PATH, name = "id")
-									}
+								, responses = {
+								@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Tariff.class))),
+								@ApiResponse(responseCode = "404", description = "Tariff no found!"),
+								@ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response.")}
+								,parameters = {
+										@Parameter(in = ParameterIn.PATH, name = "id")
+								}
 							)),
-					@RouterOperation(path = "/v1/tariff/{id}"
+					@RouterOperation(path = "/v1/admin/tariff/{id}"
 							, produces = {
 							MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.DELETE, beanClass = TariffHandler.class, beanMethod = "delete",
 							operation = @Operation(operationId = "delete"
-									, responses = {
-									@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Tariff.class))),
-									@ApiResponse(responseCode = "404", description = "Tariff no found!"),
-									@ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response.")}
-									,parameters = {
-											@Parameter(in = ParameterIn.PATH, name = "id")
-									}
+								, responses = {
+								@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Tariff.class))),
+								@ApiResponse(responseCode = "404", description = "Tariff no found!"),
+								@ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response.")}
+								,parameters = {
+										@Parameter(in = ParameterIn.PATH, name = "id")
+								}
 							)),
-					@RouterOperation(path = "/v1/tariff/{id}/{price}"
+					@RouterOperation(path = "/v1/admin/tariff/{id}/{price}"
 							, produces = {
 							MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.PATCH, beanClass = TariffHandler.class, beanMethod = "updatePrice",
 							operation = @Operation(operationId = "updatePrice"
-									, responses = {
-									@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Tariff.class))),
-									@ApiResponse(responseCode = "404", description = "Tariff no found!"),
-									@ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response.")}
-									,parameters = {
-											@Parameter(in = ParameterIn.PATH, name = "id"),
-											@Parameter(in = ParameterIn.PATH, name = "price"),
-									}
+								, responses = {
+								@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Tariff.class))),
+								@ApiResponse(responseCode = "404", description = "Tariff no found!"),
+								@ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response.")}
+								,parameters = {
+										@Parameter(in = ParameterIn.PATH, name = "id"),
+										@Parameter(in = ParameterIn.PATH, name = "price"),
+								}
 							)),
-					@RouterOperation(path = "/v1/tariff"
+					@RouterOperation(path = "/v1/admin/tariff"
 							, produces = {
 							MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.POST, beanClass = TariffHandler.class, beanMethod = "create",
 							operation = @Operation(operationId = "create"
-									, responses = {
-									@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Tariff.class))),
-									@ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response.")}
-									, requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = Tariff.class)))
+								, responses = {
+								@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Tariff.class))),
+								@ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response.")}
+								, requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = Tariff.class)))
 							)),
-					@RouterOperation(path = "/v1/tariff{brandId}/{productId}/{date}"
+					@RouterOperation(path = "/v1/tariff/{brandId}/{productId}/{date}"
 							, produces = {
-							MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.POST, beanClass = TariffHandler.class, beanMethod = "getFromBrandProductDate",
+							MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.GET, beanClass = TariffHandler.class, beanMethod = "getFromBrandProductDate",
 							operation = @Operation(operationId = "getFromBrandProductDate"
-									, responses = {
-									@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Tariff.class))),
-									@ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response.")}
-									,parameters = {
-										@Parameter(in = ParameterIn.PATH, name = "brandId"),
-										@Parameter(in = ParameterIn.PATH, name = "productId"),
-										@Parameter(in = ParameterIn.PATH, name = "date")
-									}
+								, responses = {
+								@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Tariff.class))),
+								@ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response.")}
+								,parameters = {
+									@Parameter(in = ParameterIn.PATH, name = "brandId"),
+									@Parameter(in = ParameterIn.PATH, name = "productId"),
+									@Parameter(in = ParameterIn.PATH, name = "date")
+								}
 							)),
 
 			})

@@ -53,55 +53,33 @@ public class CurrencyHandler {
 
     // @formatter:off
 
-    @Operation(summary = "List all currencies registered.")
-    @ApiResponses(value={
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response")
-    })
     public Mono<ServerResponse> getAll(ServerRequest serverRequest) {
-        return serverRequest.principal()
-                .map(Principal::getName)
-                .flatMap((username) ->
-                    ServerResponse.ok()
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body( BodyInserters.fromValue(currencies.values().stream().toList()) ));
+        return ServerResponse.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body( BodyInserters.fromValue(currencies.values().stream().toList()) );
     }
 
-    @Operation(summary = "Given a currency code, return the currency details.")
-    @ApiResponses(value={
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response"),
-            @ApiResponse(responseCode = "404", description = "Currency not found")
-    })
     public Mono<ServerResponse> get(ServerRequest request) {
 
         Optional<Currency> currency= Optional.ofNullable(currencies.get( request.pathVariable("currencyCode")  ));
 
-        return ServerResponse.status( currency.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK)
-            .contentType(MediaType.APPLICATION_JSON)
-            .body( currency.isEmpty() ? BodyInserters.fromValue(CURRENCY_NO_FOUND) : BodyInserters.fromValue(currency) );
+        return currency.map(value -> ServerResponse.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body( BodyInserters.fromValue(value.toString() ))).orElseGet(() -> ServerResponse.status( HttpStatus.NOT_FOUND )
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body( BodyInserters.fromValue(CURRENCY_NO_FOUND)));
     }
 
-    @Operation(summary = "Given a currency code and a value, return the corresponding formatted string.")
-    @ApiResponses(value={
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "401", description = "Authentication is required to get the requested response"),
-            @ApiResponse(responseCode = "404", description = "Currency not found")
-    })
     public Mono<ServerResponse> getFormatted(ServerRequest serverRequest) {
-        return serverRequest.principal()
-                .map(Principal::getName)
-                .flatMap((username) -> {
 
-                        Optional<String> str= Optional.ofNullable( format( serverRequest.pathVariable("currencyCode"), Integer.parseInt(serverRequest.pathVariable("value")) ));
+        Optional<String> str= Optional.ofNullable( format( serverRequest.pathVariable("currencyCode"), Integer.parseInt(serverRequest.pathVariable("value")) ));
 
-                        return ServerResponse.status( str.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .body( str.isEmpty() ? BodyInserters.fromValue(CURRENCY_NO_FOUND) : BodyInserters.fromValue(str) );
-                    }
-                );
+        return str.map(s -> ServerResponse.ok()
+                            .contentType(MediaType.TEXT_PLAIN)
+                            .body( BodyInserters.fromValue(s) )).orElseGet(() -> ServerResponse.status( HttpStatus.NOT_FOUND )
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .body( BodyInserters.fromValue(CURRENCY_NO_FOUND) ));
     }
-
 
     // @formatter:on
 
